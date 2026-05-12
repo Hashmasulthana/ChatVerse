@@ -19,7 +19,7 @@ import {
 
 // SOCKET
 const socket = io(
-  "http://localhost:5000"
+  "https://chatverse-q7ve.onrender.com"
 );
 
 

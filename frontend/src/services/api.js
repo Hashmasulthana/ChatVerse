@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+
+  baseURL:
+  "https://chatverse-q7ve.onrender.com/api",
+
 });
 
 export default API;
