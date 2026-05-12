@@ -1,0 +1,181 @@
+.chat-window{
+  height:100vh;
+
+  display:flex;
+  flex-direction:column;
+
+  background:#fff7fa;
+}
+
+.chat-header{
+  height:80px;
+
+  background:white;
+
+  border-bottom:1px solid #f3f4f6;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 30px;
+
+  flex-shrink:0;
+}
+
+.chat-header h2{
+  color:#E91E63;
+  font-size:1.3rem;
+}
+
+.messages{
+  flex:1;
+
+  overflow-y:auto;
+
+  padding:28px;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:20px;
+}
+
+.message{
+  max-width:420px;
+
+  background:white;
+
+  padding:14px 18px;
+
+  border-radius:20px 20px 20px 8px;
+
+  box-shadow:
+  0 4px 15px rgba(0,0,0,0.04);
+
+  display:flex;
+  flex-direction:column;
+}
+
+.own-message{
+  align-self:flex-end;
+
+  background:linear-gradient(
+    135deg,
+    #E91E63,
+    #EC4899
+  );
+
+  border-radius:20px 20px 8px 20px;
+}
+
+.message strong{
+  font-size:0.88rem;
+
+  margin-bottom:6px;
+
+  color:#E91E63;
+}
+
+.message p{
+  line-height:1.6;
+
+  word-break:break-word;
+
+  font-size:0.96rem;
+
+  color:#333;
+}
+
+.message span{
+  margin-top:8px;
+
+  align-self:flex-end;
+
+  font-size:0.72rem;
+
+  color:#999;
+}
+
+.own-message strong,
+.own-message p,
+.own-message span{
+  color:white;
+}
+
+.chat-input{
+  background:white;
+
+  padding:18px 22px;
+
+  border-top:1px solid #f3f4f6;
+
+  display:flex;
+
+  gap:14px;
+
+  flex-shrink:0;
+}
+
+.chat-input input{
+  flex:1;
+
+  height:58px;
+
+  border:none;
+
+  background:#fff1f5;
+
+  border-radius:18px;
+
+  padding:0 20px;
+
+  font-size:1rem;
+}
+
+.chat-input input:focus{
+  outline:none;
+}
+
+.chat-input button{
+  width:120px;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+    135deg,
+    #E91E63,
+    #EC4899
+  );
+
+  color:white;
+
+  font-size:1rem;
+  font-weight:600;
+
+  transition:0.3s;
+}
+
+.chat-input button:hover{
+  transform:translateY(-2px);
+}
+
+.chat-header p{
+  margin-top:4px;
+  color:#888;
+  font-size:0.9rem;
+}
+
+.typing-text{
+  padding-left:30px;
+  padding-bottom:10px;
+
+  color:var(--royal-pink);
+
+  font-size:0.9rem;
+
+  font-style:italic;
+}
+
+.message-text{
+  white-space:pre-wrap;
+}

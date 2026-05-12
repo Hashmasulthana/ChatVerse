@@ -1,0 +1,26 @@
+# dependencies
+node_modules
+
+# env files
+.env
+
+# logs
+npm-debug.log*
+
+# build files
+dist
+build
+
+# database
+*.sqlite
+*.db
+
+# uploads cache
+uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# vscode
+.vscode/

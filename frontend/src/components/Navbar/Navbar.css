@@ -1,0 +1,51 @@
+.navbar{
+  width:100%;
+  padding:20px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:10;
+}
+
+.logo{
+  font-size:2rem;
+  font-weight:800;
+  color:#1E1E1E;
+}
+
+.logo span{
+  color:var(--royal-pink);
+}
+
+.nav-links{
+  display:flex;
+  gap:15px;
+}
+
+.nav-login,
+.nav-register{
+  padding:12px 26px;
+  border-radius:12px;
+  font-weight:600;
+  font-size:0.95rem;
+}
+
+.nav-login{
+  background:white;
+  border:2px solid var(--royal-pink);
+  color:var(--royal-pink);
+}
+
+.nav-register{
+  background:var(--royal-pink);
+  color:white;
+}
+
+.nav-login:hover,
+.nav-register:hover{
+  transform:translateY(-3px);
+}
