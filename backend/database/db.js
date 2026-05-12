@@ -1,94 +1,98 @@
-const sqlite3 = require("sqlite3");
-const { open } = require("sqlite");
+const Database =
+require("better-sqlite3");
 
-async function connectDB() {
-
-  const db = await open({
-
-    filename: "./chatapp.db",
-
-    driver: sqlite3.Database,
-
-  });
+const path =
+require("path");
 
 
-  // USERS
-  await db.exec(`
-
-    CREATE TABLE IF NOT EXISTS users(
-
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-      username TEXT,
-
-      email TEXT UNIQUE,
-
-      password TEXT,
-
-      profilePic TEXT DEFAULT ''
-
-    )
-
-  `);
+// DATABASE PATH
+const dbPath =
+path.join(
+  __dirname,
+  "chatapp.db"
+);
 
 
-  // ROOMS
-  await db.exec(`
-
-    CREATE TABLE IF NOT EXISTS rooms(
-
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-      roomName TEXT UNIQUE,
-
-      createdBy TEXT,
-
-      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-
-    )
-
-  `);
+// DATABASE CONNECTION
+const db =
+new Database(dbPath);
 
 
-  // ROOM MEMBERS
-  await db.exec(`
+// ================= USERS =================
+db.prepare(`
 
-    CREATE TABLE IF NOT EXISTS room_members(
+CREATE TABLE IF NOT EXISTS users(
 
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-      roomName TEXT,
+  username TEXT UNIQUE,
 
-      username TEXT
+  email TEXT UNIQUE,
 
-    )
+  password TEXT,
 
-  `);
+  profilePic TEXT DEFAULT ''
+
+)
+
+`).run();
 
 
-  // MESSAGES
-  await db.exec(`
+// ================= ROOMS =================
+db.prepare(`
 
-    CREATE TABLE IF NOT EXISTS messages(
+CREATE TABLE IF NOT EXISTS rooms(
 
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-      room TEXT,
+  roomName TEXT UNIQUE,
 
-      author TEXT,
+  createdBy TEXT,
 
-      message TEXT,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 
-      time TEXT,
+)
 
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+`).run();
 
-    )
 
-  `);
+// ================= ROOM MEMBERS =================
+db.prepare(`
 
-  return db;
+CREATE TABLE IF NOT EXISTS room_members(
 
-}
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-module.exports = connectDB;
+  roomName TEXT,
+
+  username TEXT
+
+)
+
+`).run();
+
+
+// ================= MESSAGES =================
+db.prepare(`
+
+CREATE TABLE IF NOT EXISTS messages(
+
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+  room TEXT,
+
+  author TEXT,
+
+  message TEXT,
+
+  time TEXT,
+
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+
+)
+
+`).run();
+
+
+// EXPORT DATABASE
+module.exports = db;

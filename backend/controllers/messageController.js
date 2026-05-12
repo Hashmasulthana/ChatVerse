@@ -1,62 +1,97 @@
-const connectDB = require("../database/db");
+const db =
+require("../database/db");
 
 
-// SAVE MESSAGE
-const saveMessage = async (data) => {
+// ================= SAVE MESSAGE =================
+const saveMessage =
+async (data) => {
 
-  const db = await connectDB();
+  try {
 
-  await db.run(`
-  INSERT INTO messages (
-    room,
-    author,
-    message,
-    time
-  )
-  VALUES (?, ?, ?, ?)
-`, [
-  data.room,   // private room id bhi yahi store hoga
-  data.author,
-  data.message,
-  data.time
-]);
+    db.prepare(
+      `
+      INSERT INTO messages (
+        room,
+        author,
+        message,
+        time
+      )
+      VALUES (?, ?, ?, ?)
+      `
+    ).run(
+
+      data.room,
+
+      data.author,
+
+      data.message,
+
+      data.time
+
+    );
+
+  } catch (error) {
+
+    console.log(
+      "Save Message Error:",
+      error
+    );
+
+  }
 
 };
 
 
-// GET ROOM MESSAGES
-const getMessages = async (req, res) => {
+
+// ================= GET ROOM MESSAGES =================
+const getMessages =
+async (req, res) => {
 
   try {
 
-    const { room } = req.params;
+    const { room } =
+    req.params;
 
-    const db = await connectDB();
 
-    const messages = await db.all(
+    // GET ALL MESSAGES
+    const messages =
+    db.prepare(
       `
-      SELECT * FROM messages
+      SELECT *
+      FROM messages
       WHERE room = ?
       ORDER BY id ASC
-      `,
-      [room]
-    );
+      `
+    ).all(room);
 
-    res.status(200).json(messages);
+
+    // RESPONSE
+    res.status(200).json(
+      messages
+    );
 
   } catch (error) {
 
     console.log(error);
 
     res.status(500).json({
-      message: "Server Error",
+
+      message:
+      "Server Error",
+
     });
 
   }
 
 };
 
+
+
+// EXPORTS
 module.exports = {
+
   saveMessage,
+
   getMessages,
+
 };

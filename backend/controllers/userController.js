@@ -1,49 +1,61 @@
-const connectDB =
+const db =
 require("../database/db");
 
 
-// SEARCH USERS + ROOMS
+// ================= SEARCH USERS + ROOMS =================
 const searchUsers =
 async (req, res) => {
 
   try {
 
     const { query } =
-      req.query;
+    req.query;
 
-    const db =
-      await connectDB();
+
+    // VALIDATION
+    if(!query){
+
+      return res.status(400).json({
+
+        message:
+        "Search query required",
+
+      });
+
+    }
 
 
     // SEARCH USERS
     const users =
-      await db.all(
-        `
-        SELECT
-          id,
-          username,
-          profilePic
-        FROM users
-        WHERE LOWER(username)
-        LIKE LOWER(?)
-        `,
-        [`%${query}%`]
-      );
+    db.prepare(
+      `
+      SELECT
+        id,
+        username,
+        profilePic
+      FROM users
+      WHERE LOWER(username)
+      LIKE LOWER(?)
+      `
+    ).all(
+      `%${query}%`
+    );
 
 
     // SEARCH ROOMS
     const rooms =
-      await db.all(
-        `
-        SELECT
-          roomName,
-          createdBy
-        FROM rooms
-        WHERE LOWER(roomName)
-        LIKE LOWER(?)
-        `,
-        [`%${query}%`]
-      );
+    db.prepare(
+      `
+      SELECT
+        roomName,
+        createdBy
+      FROM rooms
+      WHERE LOWER(roomName)
+      LIKE LOWER(?)
+      `
+    ).all(
+      `%${query}%`
+    );
 
 
     // RESPONSE
@@ -71,7 +83,8 @@ async (req, res) => {
 };
 
 
-// PROFILE UPLOAD
+
+// ================= PROFILE UPLOAD =================
 const uploadProfilePic =
 async (req, res) => {
 
@@ -82,7 +95,7 @@ async (req, res) => {
     } = req.body;
 
 
-    // CHECK FILE
+    // FILE CHECK
     if(!req.file){
 
       return res.status(400).json({
@@ -95,29 +108,26 @@ async (req, res) => {
     }
 
 
+    // IMAGE FILE
     const profilePic =
-      req.file.filename;
-
-    const db =
-      await connectDB();
+    req.file.filename;
 
 
     // IMAGE URL
     const imageUrl =
-    `http://localhost:5000/uploads/${profilePic}`;
+    `${req.protocol}://${req.get("host")}/uploads/${profilePic}`;
 
 
     // UPDATE USER
-    await db.run(
+    db.prepare(
       `
       UPDATE users
       SET profilePic = ?
       WHERE username = ?
-      `,
-      [
-        imageUrl,
-        username,
-      ]
+      `
+    ).run(
+      imageUrl,
+      username
     );
 
 
@@ -148,6 +158,8 @@ async (req, res) => {
 };
 
 
+
+// EXPORTS
 module.exports = {
 
   searchUsers,
