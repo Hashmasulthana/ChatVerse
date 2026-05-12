@@ -204,14 +204,14 @@ Features:
 ```bash
 ChatVerse/
 │
-├── client/
+├── frontend/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
 │   │   ├── services/
-│   │   └── App.js
+│   │   └── App.jsx
 │
-├── server/
+├── backend/
 │   ├── controllers/
 │   ├── routes/
 │   ├── middleware/
