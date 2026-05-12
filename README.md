@@ -237,7 +237,7 @@ git clone YOUR_GITHUB_REPO_LINK
 ## Move to server folder
 
 ```bash
-cd server
+cd backend
 ```
 
 ---
@@ -269,7 +269,7 @@ http://localhost:5000
 ## Move to client folder
 
 ```bash
-cd client
+cd frontend
 ```
 
 ---
