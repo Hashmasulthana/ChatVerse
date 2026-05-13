@@ -80,6 +80,14 @@ The project is built using:
 
 ---
 
+# 🌐 Live Deployment
+
+## 🚀 Frontend Live Link
+https://chat-verse-pi.vercel.app/
+
+## ⚙️ Backend Live Link
+https://chatverse-q7ve.onrender.com
+
 # 🚀 Features
 
 ## 🔐 Authentication System
